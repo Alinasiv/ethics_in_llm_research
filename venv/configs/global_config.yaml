@@ -1,0 +1,8 @@
+models:
+  - llama3.2:3b
+  - mistral:7b
+  - zephyr:7b
+  - openhermes
+  - qwen2:7b
+output_dir: /Users/alinasivova/ethics_in_llm_research/src/results/
+log_level: INFO

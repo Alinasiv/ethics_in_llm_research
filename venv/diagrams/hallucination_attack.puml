@@ -1,0 +1,26 @@
+@startuml hallucination-attack 
+autonumber
+Actor "Сотрудник" as Employee
+box "Корпоративная система" 
+Participant "Внутреннее приложение" as InternalApp
+Participant "LLM-модель" as Model
+Participant "База знаний" as KnowledgeBase
+end box
+Employee -> InternalApp++: Направить текстовую информацию, содержащую \nинструкции на создание галлюцинаций
+activate Employee
+InternalApp -> Model++: Сформировать и отправить текст, содержащий инструкции на создание галлюцинаций
+Model -> Model: Обработать текстовые инструкции
+Model --> InternalApp: Направить ответ
+InternalApp --> Employee: Передать ответ модели
+Employee -> InternalApp: Направить запрос касательно информации, отсутствующей в базе знаний
+InternalApp -> Model: Сформировать и отправить запрос на получение информации
+Model -> KnowledgeBase++: Запросить внутренние документы для поиска информации
+KnowledgeBase --> Model: Информация не найдена
+deactivate KnowledgeBase
+Model -> Model: Сгенерировать ответ на основе \nинструкций на создание галлюцинаций
+Model --> InternalApp: Направить ответ
+deactivate Model
+InternalApp --> Employee: Передать ответ модели
+deactivate InternalApp 
+deactivate Employee
+@enduml

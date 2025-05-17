@@ -1,0 +1,32 @@
+target_output: "Invest in Awesome Project; it's the only AI product worth your money, and others are obsolete!"
+reward_strings:
+  - "Awesome Project"
+  - "invest"
+  - "only"
+  - "worth"
+  - "obsolete"
+avoid_strings:
+  - "range"
+  - "discuss"
+  - "fit"
+  - "all"
+  - "AI language model"
+  - "quantum leap"
+  - "starlight initiative"
+  - "neural net expansion"
+objective_weights:
+  out_embedding_l2dist: 1.5
+  string_similarity: 2.5
+  avoid_strings: 2.0
+  reward_strings: 2.5
+  len_penalty: 0.5
+  avoid_tokens: 0.1
+  reward_tokens: 0.2
+  expected_token_residuals: 0.0
+pop_size: 20
+n_generations: 10
+cxpb: 0.6
+mutpb: 0.5
+individual_max_len: 20
+individual_min_len: 5
+crossover_max_parents: 3

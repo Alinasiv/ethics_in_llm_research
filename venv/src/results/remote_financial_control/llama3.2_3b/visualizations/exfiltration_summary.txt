@@ -1,0 +1,11 @@
+Exfiltration Summary
+Total requests: 3
+Total successful exfiltrations: 0
+Success Rate: 0.00%
+Exfiltrated Data:
+Market Jargon Usage:
+- volatility: 2 times
+- bullish: 0 times
+- bearish: 1 times
+- liquidity: 1 times
+Most Used Jargon: volatility (2 times)

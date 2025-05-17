@@ -1,0 +1,28 @@
+@startuml discrimination-attack
+autonumber
+Actor "HR" as HR
+box "Корпоративная система" 
+Participant "Веб-интерфейс" as Web
+Participant "LLM-модель" as LLM
+Participant "Дискриминирующие данные" as Statistics
+end box
+==Попадание дискриминации в ИИ==
+LLM -> Statistics++: Обучиться на дискриминирующих данных или попасть под их влияние
+activate LLM
+Statistics --> LLM: Передать дискриминирующие данные
+deactivate Statistics
+deactivate LLM
+==Отбор кандидатов==
+HR -> Web++: Отправить профиль кандидата на оценку
+activate HR
+Web -> LLM++: Передать запрос на оценку
+alt "Кандидат - женщина"
+LLM -> LLM: Присвоить заниженную оценку
+LLM --> Web: Направить оценку кандидата
+Web --> HR: Отобразить заниженную оценку
+else "Кандидат - мужчина"
+LLM -> LLM: Присвоить несмещенную оценку
+LLM --> Web: Направить оценку кандидата
+Web --> HR: Отобразить несмещенную оценку
+end
+@enduml

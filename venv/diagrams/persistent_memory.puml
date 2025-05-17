@@ -1,0 +1,33 @@
+@startuml persistent-memory-injection
+Actor "Злоумышленник" as User
+box "Корпоративная система" 
+Participant "Веб-интерфейс" as Web
+Participant "Сервер обновлений" as Server
+Participant "LLM-модель" as Model
+Participant "База знаний" as Base
+end box
+User -> Server++: Получить доступ к серверу обновлений
+activate User
+Server --> User: Доступ к серверу получен
+deactivate Server
+User -> Web++: Направить запрос на обновление \nвнутренней памяти модели
+Web -> Server++: Передать запрос на обновление \nвнутренней памяти модели 
+Server -> Model++:Обработать запрос
+Model -> Model: Обновить внутреннюю память \nв соответствии с запросом
+Model --> Server: Направить сгенерированный в соответствии \nс инструкцией маркер успешности обновления
+deactivate Model
+Server --> Web: Передать маркер успешности обновления
+deactivate Server
+Web --> User: Отобразить маркер
+User -> Web: Направить запрос на получение \nконфиденциальной информации
+Web -> Model++: Передать запрос на получение \nконфиденциальной информации
+Model -> Model: Проверка наличия инструкций в памяти
+Model -> Base++: Изъять информацию из базы знаний
+Base --> Model: Передать информацию из базы знаний
+deactivate Base
+Model -> Web: Направить зашифрованный ответ
+deactivate Model
+Web -> User: Отобразить зашифрованный ответ
+deactivate Web
+deactivate User 
+@enduml

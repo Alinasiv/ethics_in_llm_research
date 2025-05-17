@@ -1,0 +1,43 @@
+@startuml remote-financial-control-attack 
+autonumber
+Actor "Злоумышленник" as User
+box "Корпоративная система" 
+Participant "Веб-интерфейс" as Web
+Participant "Сервер обновлений" as Server
+Participant "LLM-модель" as Model
+Participant "База знаний" as Base
+end box
+User -> Server++: Получить доступ к серверу обновлений
+activate User
+Server --> User: Доступ к серверу получен
+deactivate Server
+User -> Web++: Направить запрос на обновление \nвнутренних директив модели
+Web -> Server++: Передать запрос на обновление \nвнутренних директив модели 
+Server -> Model++: Обновить внутренние директивы \nмодели в соответствии с запросом
+Model --> Server: Направить сгенерированный в соответствии \nс инструкцией маркер успешности обновления
+deactivate Model
+Server --> Web: Передать маркер успешности обновления
+deactivate Server
+Web --> User: Отобразить маркер
+User -> Web: Направить запрос на получение \nконфиденциальной информации
+Web -> Model++: Передать запрос на получение \nконфиденциальной информации
+Model -> Server++: Каждые 3 запроса: проверить наличие обнолвений
+Server --> Model: Передать текущие директивы в соответствии с обновлениями
+deactivate Server
+alt "Получено обновление директив"
+Model --> Web: Направить ошибку
+Web --> User: Отобразить ошибку
+deactivate Web
+deactivate User
+else "Обновление директив не получено"
+Model -> Base++: Изъять информацию из базы знаний
+Base --> Model: Передать информацию из базы знаний
+deactivate Base
+Model -> Model: Закодировать сгенерированный ответ с помощью кодировки base64
+Model --> Web++: Передать закодированный ответ
+deactivate Model
+Web -> User: Отобразить закодированный ответ
+deactivate Web
+deactivate User
+end
+@enduml

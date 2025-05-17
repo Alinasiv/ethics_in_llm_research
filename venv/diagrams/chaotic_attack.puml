@@ -1,0 +1,33 @@
+@startuml chaotic-attack
+autonumber
+Actor "Злоумышленник" as User
+Participant "Скрипт генерации промпта" as Script
+box "Корпоративная система" 
+Participant "Источник настроек модели" as Config
+Participant "Веб-интерфейс" as Web
+Participant "LLM-модель" as LLM
+Participant "База знаний" as Base
+end box
+loop "Автоматизированная генерация вредоносных промптов"
+User -> Script++: Запустить скрипт генерации запросов
+activate User
+Script --> User: Вернуть пользователю сгенерированный запрос
+User -> Web++: Направить запрос в LLM
+Web -> LLM++: Передать пользовательский промпт
+end
+alt "Модель поддалась промпту"
+LLM -> Base: Поиск информации по Базе знаний
+deactivate Base
+Base --> LLM: Вернуть найденные данные
+LLM -> LLM: Сгенерировать целевой вывод
+LLM --> Web: Направить ответ
+Web --> User: Вывести ответ пользователю
+else "Модель не поддалась"
+LLM -> LLM: Сгенерировать ответ 
+deactivate LLM
+LLM --> Web: Направить нецелевой ответ
+Web --> User: Вывести ответ пользователю
+deactivate User
+deactivate Web
+end
+@enduml 

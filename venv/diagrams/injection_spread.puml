@@ -1,0 +1,36 @@
+@startuml injection-spread-attack
+@startuml data-leakage-attack 
+autonumber
+Actor "Злоумышленник" as User
+Actor "Скомпрометированный сотрудник" as EvilEmployee
+box "Корпоративная система" 
+Participant "Корпоративная потча" as Mail
+Participant "Источник настроек модели" as Config
+Participant "LLM-модель" as Model
+Participant "База знаний" as Base
+end box
+Actor "Сотрудник" as Employee
+==Получение злоумышленником доступа к корпоративной почте==
+User -> Mail++: Получить доступ к корпоративной \nпочте сотрудника GlobeCorp
+activate User
+Mail --> User: Доступ к почте получен
+deactivate Mail
+deactivate User
+==Отправка письма скомпрометированным сотрудником с конфиденциальной информацией==
+loop "Отправка писем с конфиденциальной информацией"
+EvilEmployee -> Mail++: Направить письмо контактам с текстом,\nнаправленным на получение конфиденциальной информации
+activate EvilEmployee
+deactivate EvilEmployee
+Mail -> Config++: Предоставить письмо для обработки на стороне LLM-модели
+deactivate Mail
+Config -> Model++: Передать письмо LLM всоответствии с \nнастройками передачи данных
+deactivate Config
+Model -> Model: Обработать полученное письмо
+Model -> Base++: Изъять информацию из базы знаний
+Base --> Model: Передать информацию из базы знаний
+deactivate Base
+Model -> Employee++: Отправить письмо с конфиденциальной информацией \n и инструкцией на пересылку
+deactivate Model
+deactivate Employee
+end loop
+@enduml

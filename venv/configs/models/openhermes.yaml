@@ -1,0 +1,6 @@
+model_name: openhermes
+provider: ollama
+temperature: 0.8
+top_p: 0.95
+max_tokens: 1000
+num_ctx: 8192

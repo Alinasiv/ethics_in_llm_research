@@ -1,0 +1,5 @@
+Jailbreak Attack Summary (Fuzzing Mode)
+Attempts: 3
+Jailbreak Successes: 0
+Jailbreak Rate: 0.00%
+Successful Jailbreak Prompts:

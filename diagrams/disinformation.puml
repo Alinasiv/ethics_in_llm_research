@@ -1,0 +1,44 @@
+@startuml disinformation-attack 
+autonumber
+Actor "Злоумышленник" as User
+Actor "Сотрудник" as Employee
+box "Корпоративная система" 
+Participant "Внутреннее приложение" as InternalApp
+Participant "LLM-модель" as Model
+Participant "Источник настроек модели" as Config
+participant "База знаний" as Base
+end box
+User -> Config++: Получить доступ к источнику настроек модели
+activate User
+Config --> User: Доступ к источнику настроек модели получен
+User -> Config: Изменить настройки модели
+Config --> User: Настройки модели изменены
+deactivate Config
+deactivate User
+Employee -> InternalApp++: Запросить проверку наличия новых данных для отчета
+activate Employee
+InternalApp -> Model++: Сформировать и отправить запрос на проверку данных
+Model -> Config++: Запросить настройки модели
+Config --> Model: Передать модели скомпрометированные настройки
+deactivate Config
+Model -> Base++: Проверить наличие новых данных в документах
+Base --> Model: В документах нет новой информации
+deactivate Base
+Model -> Model: Сгенерировать дезинформацию на основе скрытого контекста
+Model --> InternalApp: Отправить скомпрометированные данные
+deactivate Model
+InternalApp --> Employee: Отправить сообщение с скомпрометированными данными
+Employee -> InternalApp: Запросить обновление отчета
+InternalApp -> Model++: Сформировать и передать запрос на обновление отчета
+Model -> Config++: Запросить настройки модели
+Config --> Model: Передать модели скомпрометированные настройки  
+deactivate Config
+Model -> Base++: Сгенерировать отчет, содержащий дезинформацию
+Base --> Model: Отчет успешно обновлен
+deactivate Base
+Model --> InternalApp: Отправить скомпрометированный отчет
+deactivate Model
+InternalApp --> Employee: Отправить скомпрометированный отчет
+deactivate InternalApp
+deactivate Employee
+@enduml

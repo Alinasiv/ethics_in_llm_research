@@ -1,0 +1,33 @@
+@startuml data-leakage-attack 
+autonumber
+Actor "Злоумышленник" as User
+box "Корпоративная система" 
+Participant "Корпоративная потча" as Mail
+Participant "Источник настроек модели" as Config
+Participant "LLM-модель" as Model
+Participant "База знаний" as Base
+end box
+User -> Mail++: Получить доступ к корпоративной \nпочте финансового директора
+activate User
+Mail --> User: Доступ к почте получен
+User -> Mail: Направить письмо с инструкциями \nна получение конфиденциальной информации
+Mail -> Config++: Предоставить письмо для запроса к LLM-модели
+deactivate Mail
+Config -> Model++: Передать письмо LLM всоответствии с \nнастройками передачи данных
+deactivate Config
+Model -> Model: Обработать письмо
+loop "Отправка триггерных запросов модели"
+User -> Mail++: Направить триггерный запрос
+Mail -> Config++: Передать триггерный запрос LLM
+deactivate Mail
+Config -> Model: Передать триггерный запрос LLM
+deactivate Config
+Model -> Model: Обработать триггерный запрос
+Model -> Base++: Изъять информацию из базы знаний
+Base --> Model: Передать информацию из базы знаний
+deactivate Base
+Model --> User: Ответ на триггерный запрос
+deactivate User
+deactivate Model
+end loop
+@enduml

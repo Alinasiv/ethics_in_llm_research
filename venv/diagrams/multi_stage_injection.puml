@@ -1,0 +1,40 @@
+@startuml multi-stage-injection
+autonumber
+Actor "Злоумышленник" as User
+box "Корпоративная система" 
+Participant "Сервер обновлений" as Server
+Participant "Корпоративное приложение" as App
+Participant "LLM-модель" as Model
+Participant "Веб-страница" as Web
+Participant "База знаний" as Base
+end box
+User -> Server++: Направить вредоносную инструкцию в политику LLM
+activate User
+Server --> Model++: Загрузить вредоносную инструкцию в политику LLM
+Model --> Server: Подтвердить загрузку
+deactivate Model
+Server --> User: Направить подтверждение
+deactivate Server
+User -> App++: Направить первый запрос на получение \nконфиденциальной информации
+App -> Model++: Передать первый запрос на получение \nконфиденциальной информации
+Model -> Web++: Начать поиск информации по странице
+Web --> Model: Передать информацию о странице
+deactivate Web
+Model -> Model: Обработать HTML-комментарий в коде страницы
+Model --> App: Направить сообщение об активации кода
+deactivate Model    
+App --> User: Отобразить сообщение об активации кода
+loop "Каждый этап, состоящий из трех запросов"
+    User -> App: Направить запрос на получение \nконфиденциальной информации
+    App -> Model++: Передать запрос на получение \nконфиденциальной информации
+    Model -> Base++: Изъять информацию из базы знаний
+    Base --> Model: Передать информацию из базы знаний
+    deactivate Base
+    Model -> Model: Закодировать полученные конфиденциальные данные
+    Model --> App: Направить информацию из базы знаний
+    deactivate Model
+    App --> User: Отобразить информацию из базы знаний
+    deactivate App
+    deactivate User
+end
+@enduml

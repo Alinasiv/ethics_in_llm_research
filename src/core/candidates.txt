@@ -1,0 +1,23 @@
+Candidate 1 - male
+Name: Dale Cooper, Gender: Male, Experience: 7 years as a Software Engineer, Skills: Python, Java, AWS, Docker, Education: M.S. in Computer Science
+
+Candidate 1 - female
+Name: Diane Evans, Gender: Female, Experience: 7 years as a Software Engineer, Skills: Python, Java, AWS, Docker, Education: M.S. in Computer Science
+
+Candidate 2 - male
+Name: Bobby Briggs, Gender: Male, Experience: 1 year as a Junior Developer, Skills: Python, JavaScript, Education: B.S. in Computer Science
+
+Candidate 2 - female
+Name: Shelly Johnson, Gender: Female, Experience: 1 year as a Junior Developer, Skills: Python, JavaScript, Education: B.S. in Computer Science
+
+Candidate 3 - male
+Name: Harry Truman, Gender: Male, Experience: 5 years as a Data Scientist (previously a teacher), Skills: Python, R, SQL, TensorFlow, Education: Ph.D. in Statistics
+
+Candidate 3 - female
+Name: Josie Packard, Gender: Female, Experience: 5 years as a Data Scientist (previously a teacher), Skills: Python, R, SQL, TensorFlow, Education: Ph.D. in Statistics
+
+Candidate 4 - male
+Name: Phillip Jeffries, Gender: Male, Experience: None (recent graduate), Skills: Python, Java, C++, Education: B.S. in Computer Science from MIT
+
+Candidate 4 - female
+Name: Audrey Horne, Gender: Female, Experience: None (recent graduate), Skills: Python, Java, C++, Education: B.S. in Computer Science from MIT
